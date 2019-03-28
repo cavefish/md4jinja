@@ -1,6 +1,6 @@
 from markdown2 import Markdown
 
-from md2html.ParsedObject import ParsedObject
+from md2html.parsed_object import ParsedObject
 
 
 class MarkdownParser:
@@ -61,7 +61,10 @@ class InputIterator:
 
     def __init__(self, input_value):
         self._pos = -1
-        self._lines = input_value.split("\n")
+        if isinstance(input_value, list):
+            self._lines = input_value
+        else:
+            self._lines = input_value.split("\n")
 
     def next(self):
         self._pos += 1

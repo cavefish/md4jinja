@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from md2html.MarkdownParser import MarkdownParser
-from md2html.ParsedObject import ParsedObject
+from md2html.markdown_parser import MarkdownParser
+from md2html.parsed_object import ParsedObject
 
 
 class TestMarkdownParser(TestCase):
