@@ -25,7 +25,7 @@ class ParsedObject(object):
         if self.has_value():
             return self._raw_value
         elif self.is_map():
-            return "\n".join(map(lambda x: x.text(), self._children.values()))
+            return "\n".join(map(lambda x: x.text(), [self._children[k] for k in self.items]))
         else:
             return "\n".join(map(lambda x: x.text(), self.items))
 
@@ -34,9 +34,9 @@ class ParsedObject(object):
         if self.has_value():
             return self._html_value
         elif self.is_map():
-            return "\n".join(map(str, self._children.values()))
+            return "\n".join(map(lambda x: x.html(), [self._children[k] for k in self.items]))
         else:
-            return "\n".join(map(str, self.items))
+            return "\n".join(map(lambda x: x.html(), self.items))
 
     def __str__(self):
         return self.html()

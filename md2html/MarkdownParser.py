@@ -22,20 +22,25 @@ class MarkdownParser:
             if line.is_parser:
                 if unparsed_lines:
                     self._add_html_item(unparsed_lines)
+                    unparsed_lines = []
                 current_parser_directive = line.parser_content
                 self.update_node_heap(current_parser_directive)
             else:
                 unparsed_lines.append(line.text)
 
-        self._add_html_item(unparsed_lines)
+        if unparsed_lines:
+            self._add_html_item(unparsed_lines)
 
-    def update_node_heap(self, current_parser_directive):
-        if current_parser_directive[0] == "begin":
-            if current_parser_directive[1] == "item":
+    def update_node_heap(self, command):
+        if command[0] == "begin":
+            if command[1] == "item":
                 candidate = self._node_heap[-1]
-                for key in current_parser_directive[2:]:
+                for key in command[2:]:
                     candidate = candidate[key]
                 self._node_heap.append(candidate)
+        elif command[0] == "end":
+            if command[1] == "item":
+                del self._node_heap[-1]
 
     def _add_html_item(self, unparsed_lines):
         self._node_heap[-1].set_value("\n".join(unparsed_lines), self._markdown.convert("\n".join(unparsed_lines)).strip())
@@ -44,6 +49,8 @@ class MarkdownParser:
     def parse_markdown(input_text):
         parser = MarkdownParser()
         parser._parse(input_text)
+        if len(parser._node_heap) > 1:
+            raise Exception("There are {} open nodes on the heap".format(len(parser._node_heap) - 1))
         return parser._result
 
 
