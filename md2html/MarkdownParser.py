@@ -33,14 +33,17 @@ class MarkdownParser:
 
     def update_node_heap(self, command):
         if command[0] == "begin":
+            candidate = self._node_heap[-1]
             if command[1] == "item":
-                candidate = self._node_heap[-1]
                 for key in command[2:]:
                     candidate = candidate[key]
-                self._node_heap.append(candidate)
+            elif command[1] == "value":
+                next_item = ParsedObject()
+                candidate.items.append(next_item)
+                candidate = next_item
+            self._node_heap.append(candidate)
         elif command[0] == "end":
-            if command[1] == "item":
-                del self._node_heap[-1]
+            del self._node_heap[-1]
 
     def _add_html_item(self, unparsed_lines):
         self._node_heap[-1].set_value("\n".join(unparsed_lines), self._markdown.convert("\n".join(unparsed_lines)).strip())

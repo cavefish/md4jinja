@@ -45,6 +45,8 @@ class ParsedObject(object):
         return len(self.items)
 
     def __getattr__(self, item):
+        if isinstance(item, int):
+            return self.items[item]
         if item not in self._children:
             self._children[item] = ParsedObject()
             self.items.append(item)
