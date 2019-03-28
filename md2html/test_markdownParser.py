@@ -62,5 +62,21 @@ text on 1
         self.assert_string(result.items[0].items[0].text(), "text on 0,0")
         self.assert_string(result[1].text(), "text on 1")
 
+    def test_parse_mix(self):
+        input_value = """[parser]: # (begin item a)
+[parser]: # (begin value)
+text on a,0
+[parser]: # (end)
+[parser]: # (end)
+[parser]: # (begin item c)
+text on c
+[parser]: # (end)
+        """
+
+        result = MarkdownParser.parse_markdown(input_value)
+        print result.text()
+        self.assert_string(result.a[0].text(), "text on a,0")
+        self.assert_string(result.c.text(), "text on c")
+
     def assert_string(self, first, second, msg=None):
         self.assertMultiLineEqual(str(first), str(second), msg)
