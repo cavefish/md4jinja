@@ -46,7 +46,7 @@ class MarkdownParser:
             del self._node_heap[-1]
 
     def _add_html_item(self, unparsed_lines):
-        self._node_heap[-1].set_value("\n".join(unparsed_lines), self._markdown.convert("\n".join(unparsed_lines)).strip())
+        self._node_heap[-1].set_value("".join(unparsed_lines), self._markdown.convert("".join(unparsed_lines)).strip())
 
     @staticmethod
     def parse_markdown(input_text):
