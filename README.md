@@ -1,5 +1,5 @@
 [parser]: # (begin item title)
-# Markdown parser for MJLM templates
+# Markdown parser for JINJA templates
 This is a MarkDown parser that transforms into html by the use of mjml as a jinja template
 
 [parser]: # (end item title)
