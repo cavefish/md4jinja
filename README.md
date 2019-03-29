@@ -53,7 +53,7 @@ After that, you will have a fully functional mjml file that can be
 [parser]: # (end item end_motto)
 [parser]: # (begin item credits title)
 
-#Thanks and credits
+# Thanks and credits
 
 [parser]: # (end item credits title)
 [parser]: # (begin item credits body)
